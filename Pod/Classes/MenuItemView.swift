@@ -69,9 +69,12 @@ open class MenuItemView: UIView {
         }
     }
     
+    fileprivate let maxWindowSize: CGFloat
+    
     // MARK: - Lifecycle
     
-    internal init(menuOptions: MenuViewCustomizable, menuItemOptions: MenuItemViewCustomizable, addDiveder: Bool) {
+    internal init(menuOptions: MenuViewCustomizable, menuItemOptions: MenuItemViewCustomizable, addDiveder: Bool, maxWindowSize: CGFloat) {
+        self.maxWindowSize = maxWindowSize
         super.init(frame: .zero)
         
         self.menuOptions = menuOptions
@@ -119,6 +122,7 @@ open class MenuItemView: UIView {
     }
     
     required public init?(coder aDecoder: NSCoder) {
+        self.maxWindowSize = UIScreen.main.bounds.width
         super.init(coder: aDecoder)
     }
     
@@ -317,9 +321,5 @@ extension MenuItemView {
         
         let itemHeight = floor(estimatedLabelSize(label).height)
         return CGSize(width: itemWidth + horizontalMargin * 2, height: itemHeight)
-    }
-    
-    fileprivate var maxWindowSize: CGFloat {
-        return bounds.width
     }
 }
