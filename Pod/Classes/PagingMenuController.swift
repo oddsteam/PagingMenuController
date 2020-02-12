@@ -78,6 +78,10 @@ open class PagingMenuController: UIViewController {
         
         // fix unnecessary inset for menu view when implemented by programmatically
         menuView?.contentInset.top = 0
+        
+        if menuView == nil {
+            setup(options)
+        }
     }
     
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -111,6 +115,10 @@ open class PagingMenuController: UIViewController {
         case .menuView(let menuOptions):
             self.menuOptions = menuOptions
         default: break
+        }
+        
+        guard view.window != nil else {
+            return
         }
         
         setupMenuView()
@@ -203,7 +211,7 @@ open class PagingMenuController: UIViewController {
     fileprivate func constructMenuView() {
         guard let menuOptions = self.menuOptions else { return }
         
-        menuView = MenuView(menuOptions: menuOptions)
+        menuView = MenuView(menuOptions: menuOptions, width: view.bounds.width)
         
         addTapGestureHandler()
         addSwipeGestureHandler()

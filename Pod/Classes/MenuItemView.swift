@@ -69,9 +69,12 @@ open class MenuItemView: UIView {
         }
     }
     
+    fileprivate let maxWindowSize: CGFloat
+    
     // MARK: - Lifecycle
     
-    internal init(menuOptions: MenuViewCustomizable, menuItemOptions: MenuItemViewCustomizable, addDiveder: Bool) {
+    internal init(menuOptions: MenuViewCustomizable, menuItemOptions: MenuItemViewCustomizable, addDiveder: Bool, maxWindowSize: CGFloat) {
+        self.maxWindowSize = maxWindowSize
         super.init(frame: .zero)
         
         self.menuOptions = menuOptions
@@ -119,6 +122,7 @@ open class MenuItemView: UIView {
     }
     
     required public init?(coder aDecoder: NSCoder) {
+        self.maxWindowSize = UIScreen.main.bounds.width
         super.init(coder: aDecoder)
     }
     
@@ -229,11 +233,7 @@ open class MenuItemView: UIView {
         let width: CGFloat
         switch menuOptions.displayMode {
         case .segmentedControl:
-            if let windowWidth = UIApplication.shared.keyWindow?.bounds.size.width {
-                width = windowWidth / CGFloat(menuOptions.itemsOptions.count)
-            } else {
-                width = UIScreen.main.bounds.width / CGFloat(menuOptions.itemsOptions.count)
-            }
+            width = bounds.width
         default:
             width = image.size.width + horizontalMargin * 2
         }
@@ -321,9 +321,5 @@ extension MenuItemView {
         
         let itemHeight = floor(estimatedLabelSize(label).height)
         return CGSize(width: itemWidth + horizontalMargin * 2, height: itemHeight)
-    }
-    
-    fileprivate var maxWindowSize: CGFloat {
-        return UIApplication.shared.keyWindow?.bounds.width ?? UIScreen.main.bounds.width
     }
 }

@@ -62,12 +62,7 @@ open class MenuView: UIScrollView {
         }
     }
     fileprivate var centerOfScreenWidth: CGFloat {
-        let screenWidth: CGFloat
-        if let width = UIApplication.shared.keyWindow?.bounds.width {
-            screenWidth = width
-        } else {
-            screenWidth = UIScreen.main.bounds.width
-        }
+        let screenWidth: CGFloat = bounds.width
         return menuItemViews[currentPage].frame.midX - screenWidth / 2
     }
     fileprivate var contentOffsetXForCurrentPage: CGFloat {
@@ -78,8 +73,8 @@ open class MenuView: UIScrollView {
     fileprivate var currentIndex: Int = 0
     
     // MARK: - Lifecycle
-    internal init(menuOptions: MenuViewCustomizable) {
-        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: menuOptions.height))
+    internal init(menuOptions: MenuViewCustomizable, width: CGFloat) {
+        super.init(frame: CGRect(x: 0, y: 0, width: width, height: menuOptions.height))
         
         self.menuOptions = menuOptions
         
@@ -208,7 +203,7 @@ open class MenuView: UIScrollView {
 
     fileprivate func constructMenuItemViews(_ menuOptions: MenuViewCustomizable) {
         constructMenuItemViews({
-            return MenuItemView(menuOptions: menuOptions, menuItemOptions: menuOptions.itemsOptions[$0], addDiveder: $1)
+            return MenuItemView(menuOptions: menuOptions, menuItemOptions: menuOptions.itemsOptions[$0], addDiveder: $1, maxWindowSize: bounds.width)
         })
     }
     
