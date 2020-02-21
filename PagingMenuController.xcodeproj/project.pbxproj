@@ -137,6 +137,7 @@
 				TargetAttributes = {
 					ECE530661B6DEB18001CF201 = {
 						CreatedOnToolsVersion = 6.4;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
